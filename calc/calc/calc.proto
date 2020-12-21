@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option go_package = "github.com/lecture4u/gRPC-introduction/calc";
+option java_multiple_files = true;
+option java_package = "calc.gRPC-introduction.lecture4u.github.com";
+
+package calc;
+
+service Calculator {
+  rpc CalcOperation (CalcRequest) returns (CalcResponse) {}
+  rpc CalcOperations (stream CalcRequest) returns (CalcResponse) {}
+  rpc GetCurrentOperationResults (CalcRequest) returns (stream CalcResponse) {}
+  rpc CalcJointOperation (CalcRequest) returns (stream CalcResponse) {}
+  rpc CalcJointOperations (stream CalcRequest) returns (stream CalcResponse) {}
+}
+
+message CalcRequest {
+  Operation op = 1;
+  int64 val = 2;
+}
+
+message CalcResponse {
+  bool error = 1;
+  int64 result = 2;
+}
+
+enum Operation {
+  add = 0;
+  mul = 1;
+  sub = 2;
+  div = 3;
+  clear = 4;
+}
